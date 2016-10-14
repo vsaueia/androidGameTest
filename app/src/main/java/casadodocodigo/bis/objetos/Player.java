@@ -13,6 +13,7 @@ import casadodocodigo.bis.R;
 import casadodocodigo.bis.config.Assets;
 import casadodocodigo.bis.controle.Accelerometer;
 import casadodocodigo.bis.controle.AccelerometerDelegate;
+import casadodocodigo.bis.controle.Runner;
 import casadodocodigo.bis.controle.ShootEngineDelegate;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenWidth;
@@ -36,7 +37,9 @@ public class Player extends CCSprite implements AccelerometerDelegate {
     }
 
     public void shoot() {
-        delegate.createShoot(new Shoot(positionX, positionY));
+        if (Runner.check().isGamePlaying() && !Runner.check().isGamePaused()) {
+            delegate.createShoot(new Shoot(positionX, positionY));
+        }
     }
 
     public void setDelegate(ShootEngineDelegate delegate) {
@@ -44,17 +47,21 @@ public class Player extends CCSprite implements AccelerometerDelegate {
     }
 
     public void moveLeft() {
-        if (positionX > 30) {
-            positionX -= 10;
+        if (Runner.check().isGamePlaying() && !Runner.check().isGamePaused()) {
+            if (positionX > 30) {
+                positionX -= 10;
+            }
+            setPosition(positionX, positionY);
         }
-        setPosition(positionX, positionY);
     }
 
     public void moveRight() {
-        if (positionX < screenWidth() - 30) {
-            positionX += 10;
+        if (Runner.check().isGamePlaying() && !Runner.check().isGamePaused()) {
+            if (positionX < screenWidth() - 30) {
+                positionX += 10;
+            }
+            setPosition(positionX, positionY);
         }
-        setPosition(positionX, positionY);
     }
 
     public void explode() {

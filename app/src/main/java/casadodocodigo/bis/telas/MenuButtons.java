@@ -1,4 +1,4 @@
-package casadodocodigo.bis.controle;
+package casadodocodigo.bis.telas;
 
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.nodes.CCDirector;
@@ -6,7 +6,9 @@ import org.cocos2d.transitions.CCFadeTransition;
 import org.cocos2d.types.CGPoint;
 
 import casadodocodigo.bis.config.Assets;
-import casadodocodigo.bis.game.GameScene;
+import casadodocodigo.bis.cenas.GameScene;
+import casadodocodigo.bis.controle.Button;
+import casadodocodigo.bis.controle.ButtonDelegate;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenHeight;
 import static casadodocodigo.bis.config.DeviceSettings.screenResolution;

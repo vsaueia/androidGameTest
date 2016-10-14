@@ -1,4 +1,4 @@
-package casadodocodigo.bis.game;
+package casadodocodigo.bis.cenas;
 
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -10,13 +10,14 @@ import org.cocos2d.types.CGRect;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.cert.CRLReason;
 import java.util.ArrayList;
 import java.util.List;
 
 import casadodocodigo.bis.R;
 import casadodocodigo.bis.config.Assets;
-import casadodocodigo.bis.controle.GameButtons;
+import casadodocodigo.bis.controle.PauseDelegate;
+import casadodocodigo.bis.controle.Runner;
+import casadodocodigo.bis.telas.GameButtons;
 import casadodocodigo.bis.controle.MeteorsEngine;
 import casadodocodigo.bis.controle.MeteorsEngineDelegate;
 import casadodocodigo.bis.controle.ScreenBackground;
@@ -25,6 +26,10 @@ import casadodocodigo.bis.objetos.Meteor;
 import casadodocodigo.bis.objetos.Player;
 import casadodocodigo.bis.objetos.Score;
 import casadodocodigo.bis.objetos.Shoot;
+import casadodocodigo.bis.telas.FinalScreen;
+import casadodocodigo.bis.telas.GameOverScreen;
+import casadodocodigo.bis.telas.PauseScreen;
+import casadodocodigo.bis.telas.TitleScreen;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenHeight;
 import static casadodocodigo.bis.config.DeviceSettings.screenResolution;
@@ -34,7 +39,7 @@ import static casadodocodigo.bis.config.DeviceSettings.screenWidth;
  * Created by viniciussilva on 06/10/2016.
  */
 
-public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEngineDelegate {
+public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEngineDelegate, PauseDelegate {
     private ScreenBackground background;
     private MeteorsEngine meteorsEngine;
     private CCLayer meteorsLayer;
@@ -46,6 +51,8 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
     private List playersArray;
     private CCLayer scoreLayer;
     private Score score;
+    private PauseScreen pauseScreen;
+    private CCLayer layerTop;
 
     private GameScene() {
         this.setIsTouchEnabled(true);
@@ -74,6 +81,9 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
 
         this.scoreLayer = CCLayer.node();
         this.addChild(this.scoreLayer);
+
+        this.layerTop = CCLayer.node();
+        this.addChild(this.layerTop);
 
         this.addGameObjects();
     }
@@ -134,6 +144,13 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
     @Override
     public void onEnter() {
         super.onEnter();
+
+        Runner.check().setIsGamePlaying(true);
+        Runner.check().setIsGamePaused(false);
+
+        SoundEngine.sharedEngine().setEffectsVolume(1F);
+        SoundEngine.sharedEngine().setSoundVolume(1F);
+
         this.schedule("checkHits");
         this.startEngines();
     }
@@ -228,5 +245,40 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
             }
         }
         return result;
+    }
+
+    private void pauseGame() {
+        if (!Runner.check().isGamePaused() && Runner.check().isGamePlaying()) {
+            Runner.setIsGamePaused(true);
+        }
+    }
+
+    public void resumeGame() {
+        if (Runner.check().isGamePaused() || !Runner.check().isGamePlaying()) {
+            this.pauseScreen = null;
+            Runner.setIsGamePaused(false);
+            Runner.setIsGamePlaying(true);
+        }
+    }
+
+    public void quitGame() {
+        SoundEngine.sharedEngine().setEffectsVolume(0F);
+        SoundEngine.sharedEngine().setSoundVolume(0F);
+
+        CCDirector.sharedDirector().replaceScene(new TitleScreen().scene());
+    }
+
+    public void pauseGameAndShowLayer() {
+        if (Runner.check().isGamePlaying() && !Runner.isGamePaused()) {
+            this.pauseGame();
+        }
+
+        if (Runner.check().isGamePaused() && Runner.check().isGamePlaying() && this.pauseScreen == null) {
+            this.pauseScreen = new PauseScreen();
+            this.layerTop.addChild(this.pauseScreen);
+            this.pauseScreen.setDelegate(this);
+        }
+
+
     }
 }

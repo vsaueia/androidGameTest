@@ -13,7 +13,7 @@ import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
 
 import casadodocodigo.bis.config.DeviceSettings;
-import casadodocodigo.bis.game.TitleScreen;
+import casadodocodigo.bis.telas.TitleScreen;
 
 public class MainActivity extends Activity {
 

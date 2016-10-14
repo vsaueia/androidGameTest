@@ -1,4 +1,4 @@
-package casadodocodigo.bis.game;
+package casadodocodigo.bis.telas;
 
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -6,7 +6,6 @@ import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
 
 import casadodocodigo.bis.config.Assets;
-import casadodocodigo.bis.controle.MenuButtons;
 import casadodocodigo.bis.controle.ScreenBackground;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenHeight;

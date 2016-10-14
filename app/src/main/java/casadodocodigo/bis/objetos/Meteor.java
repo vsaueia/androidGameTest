@@ -14,6 +14,7 @@ import java.util.Random;
 
 import casadodocodigo.bis.R;
 import casadodocodigo.bis.controle.MeteorsEngineDelegate;
+import casadodocodigo.bis.controle.Runner;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenHeight;
 import static casadodocodigo.bis.config.DeviceSettings.screenResolution;
@@ -38,8 +39,10 @@ public class Meteor extends CCSprite {
     }
 
     public void update(float dt) {
-        y -= 1;
-        this.setPosition(screenResolution(CGPoint.ccp(x, y)));
+        if (Runner.check().isGamePlaying() && !Runner.check().isGamePaused()) {
+            y -= 1;
+            this.setPosition(screenResolution(CGPoint.ccp(x, y)));
+        }
     }
 
     public void setDelegate(MeteorsEngineDelegate delegate) {

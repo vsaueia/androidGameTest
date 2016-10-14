@@ -15,4 +15,6 @@ public class Assets {
     public static String SHOOT = "shoot.png";
     public static String FINALEND = "finalend.png";
     public static String GAMEOVER = "gameover.png";
+    public static String EXIT = "exit.png";
+    public static String PAUSE = "pause.png";
 }

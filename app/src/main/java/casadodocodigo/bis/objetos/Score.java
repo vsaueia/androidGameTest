@@ -3,7 +3,7 @@ package casadodocodigo.bis.objetos;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.opengl.CCBitmapFontAtlas;
 
-import casadodocodigo.bis.game.GameScene;
+import casadodocodigo.bis.cenas.GameScene;
 
 import static casadodocodigo.bis.config.DeviceSettings.screenHeight;
 import static casadodocodigo.bis.config.DeviceSettings.screenWidth;
@@ -33,7 +33,7 @@ public class Score extends CCLayer {
     public void increase() {
         score++;
         this.text.setString(String.valueOf(this.score));
-        if (score == 5) {
+        if (score == 1) {
             this.delegate.startFinalScreen();
         }
     }
