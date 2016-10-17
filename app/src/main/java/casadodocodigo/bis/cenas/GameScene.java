@@ -131,13 +131,17 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
     private void addGameObjects() {
         this.meteorsArray = new ArrayList();
         this.meteorsEngine = new MeteorsEngine();
+
         this.player = new Player();
-        this.playerLayer.addChild(this.player);
-        this.shootsArray = new ArrayList();
         this.player.setDelegate(this);
+        this.playerLayer.addChild(this.player);
         this.playersArray = new ArrayList();
         this.playersArray.add(this.player);
+
+        this.shootsArray = new ArrayList();
+
         this.score = new Score();
+        this.score.setDelegate(this);
         this.scoreLayer.addChild(this.score);
     }
 
@@ -152,6 +156,8 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate, ShootEn
         SoundEngine.sharedEngine().setSoundVolume(1F);
 
         this.schedule("checkHits");
+        this.startGame();
+
         this.startEngines();
     }
 

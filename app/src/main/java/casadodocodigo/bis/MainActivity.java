@@ -31,15 +31,16 @@ public class MainActivity extends Activity {
         setContentView(ccglSurfaceView);
         CCDirector.sharedDirector().attachInView(ccglSurfaceView);
 
+        configSensormanager();
+
         CCDirector.sharedDirector().setScreenSize(320, 480);
 
         CCScene scene = new TitleScreen().scene();
         CCDirector.sharedDirector().runWithScene(scene);
 
-        configSensorManager();
     }
 
-    private void configSensorManager() {
+    private void configSensormanager() {
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         DeviceSettings.setSensorManager(sensorManager);
     }

@@ -33,8 +33,12 @@ public class Score extends CCLayer {
     public void increase() {
         score++;
         this.text.setString(String.valueOf(this.score));
-        if (score == 1) {
+        if (score == 100) {
             this.delegate.startFinalScreen();
         }
+    }
+
+    public void setDelegate(GameScene delegate) {
+        this.delegate = delegate;
     }
 }
